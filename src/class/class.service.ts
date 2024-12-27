@@ -46,7 +46,10 @@ export class ClassService {
   }
 
   async findOne(id: number, field: string = 'id'): Promise<Class> {
-    const classFound = await this.dataSource.manager.findOneBy(Class, { id });
+    const classFound = await this.dataSource.manager.findOne(Class, {
+      where: { id },
+      relations: ['students'],
+    });
     if (!classFound) {
       throw new CustomException(ErrorCodes.NOT_FOUND, 'Class not found', {
         field,
