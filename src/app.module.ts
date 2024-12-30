@@ -7,7 +7,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { NotFoundExceptionFilter } from './common/exceptions/not-found-exception.filter';
 import { CustomExceptionFilter } from './common/exceptions/custom-exception.filter';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import dataSource from 'data-source';
+import dataSource from 'src/data-source';
 
 @Module({
   imports: [
