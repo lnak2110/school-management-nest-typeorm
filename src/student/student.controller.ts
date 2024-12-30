@@ -18,7 +18,7 @@ import { RemoveClassDto } from 'src/class/dto/remove-class.dto';
 import { createResponse } from 'src/common/utils/response.util';
 import { CustomExceptionFilter } from 'src/common/exceptions/custom-exception.filter';
 import { CustomValidationPipe } from 'src/common/pipes/custom-validation.pipe';
-import { FindStudentByClassDto } from './dto/find-student-by.class.dto';
+import { FindStudentByClassDto } from './dto/find-student-by-class.dto';
 import { IdParamDto } from 'src/common/dto/id-param.dto';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
