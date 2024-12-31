@@ -14,7 +14,6 @@ import {
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { RemoveClassDto } from 'src/class/dto/remove-class.dto';
 import { createResponse } from 'src/common/utils/response.util';
 import { CustomExceptionFilter } from 'src/common/exceptions/custom-exception.filter';
 import { CustomValidationPipe } from 'src/common/pipes/custom-validation.pipe';
@@ -23,6 +22,7 @@ import { IdParamDto } from 'src/common/dto/id-param.dto';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { FindByNameDto } from 'src/common/dto/find-by-name.dto';
+import { IdDto } from 'src/common/dto/id.dto';
 
 @Controller('students')
 @UseFilters(CustomExceptionFilter)
@@ -98,9 +98,9 @@ export class StudentController {
   }
 
   @Delete()
-  async remove(@Body(CustomValidationPipe) removeClassDto: RemoveClassDto) {
+  async remove(@Body(CustomValidationPipe) { id }: IdDto) {
     try {
-      const data = await this.studentService.remove(removeClassDto.id);
+      const data = await this.studentService.remove(id);
       return createResponse(HttpStatus.OK, 'Student removed', data);
     } catch (error) {
       throw error;

@@ -15,7 +15,6 @@ import {
 import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
-import { RemoveClassDto } from './dto/remove-class.dto';
 import { CustomExceptionFilter } from 'src/common/exceptions/custom-exception.filter';
 import { CustomValidationPipe } from 'src/common/pipes/custom-validation.pipe';
 import { createResponse } from 'src/common/utils/response.util';
@@ -23,6 +22,7 @@ import { IdParamDto } from 'src/common/dto/id-param.dto';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { FindByNameDto } from 'src/common/dto/find-by-name.dto';
+import { IdDto } from 'src/common/dto/id.dto';
 
 @Controller('classes')
 @UseFilters(CustomExceptionFilter)
@@ -89,7 +89,7 @@ export class ClassController {
 
   @Delete()
   @UsePipes(CustomValidationPipe)
-  async remove(@Body() { id }: RemoveClassDto) {
+  async remove(@Body() { id }: IdDto) {
     try {
       const data = await this.classService.remove(id);
       return createResponse(HttpStatus.OK, 'Class removed', data);

@@ -66,7 +66,7 @@ export class ClassService {
   }
 
   async update(updateClassDto: UpdateClassDto): Promise<Class> {
-    const { id, ...restData } = updateClassDto;
+    const { id } = updateClassDto;
     const classToUpdate = await this.findOne(id);
     const classFound = await this.findOneByName(updateClassDto.name);
     if (classFound && classFound.id !== classToUpdate.id) {
@@ -80,29 +80,25 @@ export class ClassService {
       );
     }
 
-    const result = await this.dataSource.manager.update(Class, id, restData);
+    const result = await this.dataSource.manager.update(
+      Class,
+      id,
+      updateClassDto,
+    );
     const classUpdated = await this.findOne(id);
     return classUpdated;
   }
 
   async remove(id: number): Promise<Class> {
-    try {
-      const classFound = await this.findOne(id);
-      await this.dataSource.manager.delete(Class, id);
-      return classFound;
-    } catch (error) {
-      if (
-        error instanceof QueryFailedError &&
-        error.message.includes('foreign key constraint')
-      ) {
-        throw new CustomException(
-          ErrorCodes.BAD_REQUEST_INPUT,
-          'Class cannot be removed because it has students',
-          { field: 'id', value: id },
-        );
-      } else {
-        throw error;
-      }
+    const classFound = await this.findOne(id);
+    if (classFound.students.length > 0) {
+      throw new CustomException(
+        ErrorCodes.BAD_REQUEST_INPUT,
+        'Class cannot be removed because it has students',
+        { field: 'id', value: id },
+      );
     }
+    await this.dataSource.manager.delete(Class, id);
+    return classFound;
   }
 }
