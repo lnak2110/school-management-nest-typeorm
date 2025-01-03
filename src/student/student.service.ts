@@ -62,7 +62,9 @@ export class StudentService {
   }
 
   async findOneByName(name: string): Promise<Student> {
-    return await this.dataSource.manager.findOneBy(Student, { name });
+    return await this.dataSource.manager.findOne(Student, {
+      where: { name: ILike(name) },
+    });
   }
 
   async findByClassName(className: string): Promise<Student[]> {
