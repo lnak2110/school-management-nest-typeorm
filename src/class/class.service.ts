@@ -30,8 +30,8 @@ export class ClassService {
 
   async findAll(): Promise<Class[]> {
     const classes = await this.dataSource.manager.find(Class, {
-      order: { id: 'ASC' },
       relations: ['students'],
+      order: { id: 'ASC' },
     });
     return classes.map((c) => ({ ...c, studentsCount: c.students.length }));
   }

@@ -21,7 +21,7 @@ import { createResponse } from 'src/common/utils/response.util';
 import { IdParamDto } from 'src/common/dto/id-param.dto';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { FindByNameDto } from 'src/common/dto/find-by-name.dto';
+import { NameDto } from 'src/common/dto/name.dto';
 import { IdDto } from 'src/common/dto/id.dto';
 
 @Controller('classes')
@@ -55,7 +55,7 @@ export class ClassController {
 
   @Get('name') // ?keyword=
   @Roles('teacher')
-  async findByName(@Query(new CustomValidationPipe()) query: FindByNameDto) {
+  async findByName(@Query(new CustomValidationPipe()) query: NameDto) {
     try {
       const data = await this.classService.findByName(query.keyword);
       return createResponse(HttpStatus.OK, 'Classes found', data);

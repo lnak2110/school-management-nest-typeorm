@@ -17,11 +17,11 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 import { createResponse } from 'src/common/utils/response.util';
 import { CustomExceptionFilter } from 'src/common/exceptions/custom-exception.filter';
 import { CustomValidationPipe } from 'src/common/pipes/custom-validation.pipe';
-import { FindStudentByClassDto } from './dto/find-student-by-class.dto';
+import { ClassNameDto } from '../common/dto/class-name.dto';
 import { IdParamDto } from 'src/common/dto/id-param.dto';
 import { RoleGuard } from 'src/common/guards/role.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
-import { FindByNameDto } from 'src/common/dto/find-by-name.dto';
+import { NameDto } from 'src/common/dto/name.dto';
 import { IdDto } from 'src/common/dto/id.dto';
 
 @Controller('students')
@@ -56,7 +56,7 @@ export class StudentController {
 
   @Get('name') // ?keyword=
   @Roles('principal')
-  async findByName(@Query(new CustomValidationPipe()) query: FindByNameDto) {
+  async findByName(@Query(new CustomValidationPipe()) query: NameDto) {
     try {
       const data = await this.studentService.findByName(query.keyword);
       return createResponse(HttpStatus.OK, 'Students found', data);
@@ -67,7 +67,7 @@ export class StudentController {
 
   @Get('class/:className')
   @Roles('principal')
-  async findByClass(@Param() param: FindStudentByClassDto) {
+  async findByClass(@Param() param: ClassNameDto) {
     try {
       const data = await this.studentService.findByClassName(param.className);
       return createResponse(HttpStatus.OK, 'Students found', data);

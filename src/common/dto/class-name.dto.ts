@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, Length } from 'class-validator';
 
-export class FindStudentByClassDto {
+export class ClassNameDto {
   @IsString()
   @IsNotEmpty()
   @Length(1, 50)
